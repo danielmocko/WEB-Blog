@@ -1,0 +1,26 @@
+{
+  "name": "web-blog",
+  "version": "1.0.0",
+  "description": "WEB-Blog",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielmocko/WEB-Blog.git"
+  },
+  "keywords": [
+    "Blog"
+  ],
+  "author": "Daniel Mocko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielmocko/WEB-Blog/issues"
+  },
+  "homepage": "https://github.com/danielmocko/WEB-Blog#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.14"
+  }
+}
