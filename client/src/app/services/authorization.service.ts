@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http,Headers,RequestOptions} from '@angular/http';
 import { map } from "rxjs/operators";
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { tokenNotExpired } from 'angular2-jwt';
 
 
 @Injectable({
@@ -68,10 +69,13 @@ export class AuthorizationService {
       this.user=null;
       localStorage.clear();
     }
-
+/*
     loggin(){
       return this.helper.isTokenExpired(localStorage.getItem('token'));
 
     }
-
+*/
+  loggin() {
+    return tokenNotExpired();
+  }
 }
