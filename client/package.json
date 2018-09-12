@@ -20,8 +20,13 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "@auth0/angular-jwt": "^2.0.0",
+    "angular2-flash-messages": "^3.0.1",
+    "angular2-jwt": "^0.2.3",
     "core-js": "^2.5.4",
+    "jwt-decode": "^2.2.0",
     "rxjs": "~6.2.0",
+    "rxjs-compat": "^6.3.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
