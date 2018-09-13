@@ -6,7 +6,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule,FormsModule} from '@angular/forms';
 import { HttpModule} from '@angular/http';
 import { AuthorizationService } from './services/authorization.service';
 import { LoginComponent } from './components/login/login.component';
@@ -16,6 +16,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { NotAuthGuard } from './guards/notAuth.guard';
 import { BlogComponent } from './components/blog/blog.component';
 import { BlogService } from './services/blog.service';
+import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
+import { DeleteBlogComponent } from './components/delete-blog/delete-blog.component';
 
 
 @NgModule({
@@ -27,13 +29,16 @@ import { BlogService } from './services/blog.service';
     RegistrationComponent,
     LoginComponent,
     ProfileComponent,
-    BlogComponent
+    BlogComponent,
+    EditBlogComponent,
+    DeleteBlogComponent
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     FlashMessagesModule.forRoot(),
     HttpModule,
   

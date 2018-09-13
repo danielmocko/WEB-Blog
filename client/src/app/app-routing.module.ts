@@ -8,7 +8,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NotAuthGuard} from './guards/notAuth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { BlogComponent } from './components/blog/blog.component';
-
+import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
+import { DeleteBlogComponent } from './components/delete-blog/delete-blog.component';
 
 const appRoutes:Routes =[
   {path:'',component: HomeComponent},
@@ -17,6 +18,8 @@ const appRoutes:Routes =[
   {path:'login',component:LoginComponent, canActivate:[NotAuthGuard]},
   {path:'profile',component:ProfileComponent, canActivate:[AuthGuard]},
   {path:'blog',component:BlogComponent,canActivate:[AuthGuard]},
+  {path:'edit-blog/:id',component:EditBlogComponent,canActivate:[AuthGuard]},
+  {path: 'delete-blog/:id',component:DeleteBlogComponent,canActivate:[AuthGuard]},
   {path:'**', component: HomeComponent},
 ];
 

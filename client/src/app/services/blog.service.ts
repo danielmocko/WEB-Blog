@@ -15,6 +15,7 @@ export class BlogService {
     private authService:AuthorizationService,
     private http:Http
   ) { }
+
   createAuthenticationHeaders() {
     this.authService.loadToken(); // Get token so it can be attached to headers
     // Headers configuration options
@@ -30,5 +31,23 @@ export class BlogService {
   newBlog(blog) {
     this.createAuthenticationHeaders(); // Create headers
     return this.http.post(this.domain + 'blogs/newBlog', blog, this.options).pipe(map(res => res.json()));
+  }
+
+  getAllBlogs(){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain+'blogs/allBlogs', this.options ).pipe(map(res=>res.json()));
+  }
+
+  getSingleBlog(id){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain+'blogs/singleBlog/'+id,this.options).pipe(map( res=>res.json()));
+  }
+  editBlog(blog){
+    this.createAuthenticationHeaders();
+    return this.http.put(this.domain+'blogs/updateBlog/', blog ,this.options).pipe(map(res=>res.json()));
+  }
+  deleteBlog(id){
+    this.createAuthenticationHeaders();
+    return this.http.delete(this.domain +'blogs/deleteBlog/'+id,this.options).pipe(map(res=>res.json()));
   }
 }
