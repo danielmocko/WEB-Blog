@@ -69,6 +69,13 @@ export class AuthorizationService {
       this.user=null;
       localStorage.clear();
     }
+    
+    getPublicProfile(username) {
+      this.createAuthenticationHeaders(); // Create headers before sending to API
+      console.log(username);
+      return this.http.get(this.domain + 'authentication/publicProfile/' + username, this.options).pipe(map(res => res.json()));
+    }
+
 /*
     loggin(){
       return this.helper.isTokenExpired(localStorage.getItem('token'));

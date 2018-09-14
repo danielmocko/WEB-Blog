@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators} from '@angular/forms';
 import {  AuthorizationService} from '../../services/authorization.service';
 import { Router} from '@angular/router';
+import { retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -17,6 +18,8 @@ export class RegistrationComponent implements OnInit {
   emailMessage;
   usernameValid;
   usernameMessage;
+  firstNameValid;
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +32,12 @@ export class RegistrationComponent implements OnInit {
   // Function to create registration form
   createForm() {
     this.form = this.formBuilder.group({
+      firstName:['',Validators.compose([
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(30),
+        this.validateFirstName
+      ])],
       // Email Input
       email: ['', Validators.compose([
         Validators.required, // Field is required
@@ -69,6 +78,14 @@ export class RegistrationComponent implements OnInit {
     this.form.controls['username'].enable();
     this.form.controls['password'].enable();
     this.form.controls['confirm'].enable();
+  }
+  validateFirstName(controls){
+    const regExp = new RegExp(/^[a-zA-Z]+$/);
+    if(regExp.test(controls.value)){
+      return null;
+    }
+    else  
+      return {'validateFirstName':true};
   }
 
   // Function to validate e-mail is proper format
@@ -128,8 +145,6 @@ export class RegistrationComponent implements OnInit {
       username: this.form.get('username').value, // Username input field
       password: this.form.get('password').value // Password input field
     }
-
-    console.log(user.password);
     // Function from authentication service to register user
     this.authService.regiseterUser(user).subscribe(data => {
       // Resposne from registration attempt

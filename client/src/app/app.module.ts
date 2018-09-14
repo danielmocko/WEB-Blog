@@ -18,6 +18,8 @@ import { BlogComponent } from './components/blog/blog.component';
 import { BlogService } from './services/blog.service';
 import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
 import { DeleteBlogComponent } from './components/delete-blog/delete-blog.component';
+import { PublicProfileComponent } from './components/public-profile/public-profile.component';
+
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { DeleteBlogComponent } from './components/delete-blog/delete-blog.compon
     ProfileComponent,
     BlogComponent,
     EditBlogComponent,
-    DeleteBlogComponent
+    DeleteBlogComponent,
+    PublicProfileComponent,
+    PublicProfileComponent
     
   ],
   imports: [

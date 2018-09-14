@@ -9,6 +9,18 @@
 
 <!-- Registration Form -->
 <form [formGroup]="form" (submit)="onRegisterSubmit()">
+  <!--  <div class="form-group">
+        <label for="firstName">FirstName</label>
+        <div [ngClass]="{'has-error': (form.controls.firstName.errors && form.controls.firstName.dirty) || (!firstNameValid && form.controls.firstName.dirty), 'has-success': !form.controls.firstName.errors && firstNameValid}">
+          <input type="text" name="firstName" class="form-control" autocomplete="off" placeholder="*First name" formControlName="firstName" />
+        
+          <ul class="help-block">
+            <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
+            <li *ngIf="form.controls.firstName.errors?.minlength && form.controls.firstName.dirty || form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty ">Minimum characters: 2, Maximum characters: 30</li>
+            <li *ngIf="form.controls.firstName.errors?.validateFirstName && form.controls.firstName.dirty">First name must not have any special characters</li>
+          </ul>
+        </div>
+      </div>-->
 
   <!-- Username Input -->
   <div class="form-group">
