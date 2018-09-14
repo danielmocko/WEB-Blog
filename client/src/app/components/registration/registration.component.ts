@@ -18,7 +18,6 @@ export class RegistrationComponent implements OnInit {
   emailMessage;
   usernameValid;
   usernameMessage;
-  firstNameValid;
   
 
   constructor(
@@ -36,7 +35,13 @@ export class RegistrationComponent implements OnInit {
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(30),
-        this.validateFirstName
+        this.validateName
+      ])],
+      lastName:['',Validators.compose([
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(30),
+        this.validateName
       ])],
       // Email Input
       email: ['', Validators.compose([
@@ -66,6 +71,8 @@ export class RegistrationComponent implements OnInit {
 
   // Function to disable the registration form
   disableForm() {
+    this.form.controls['firstName'].disable();
+    this.form.controls['lastName'].disable();
     this.form.controls['email'].disable();
     this.form.controls['username'].disable();
     this.form.controls['password'].disable();
@@ -74,18 +81,22 @@ export class RegistrationComponent implements OnInit {
 
   // Function to enable the registration form
   enableForm() {
+    this.form.controls['firstName'].enable();
+    this.form.controls['lastName'].enable();
     this.form.controls['email'].enable();
     this.form.controls['username'].enable();
     this.form.controls['password'].enable();
     this.form.controls['confirm'].enable();
   }
-  validateFirstName(controls){
-    const regExp = new RegExp(/^[a-zA-Z]+$/);
+
+
+  validateName(controls){
+    const regExp = new RegExp(/^[A-Z][a-z0-9_-]{3,19}$/);
     if(regExp.test(controls.value)){
       return null;
     }
     else  
-      return {'validateFirstName':true};
+      return {'validateName':true};
   }
 
   // Function to validate e-mail is proper format
@@ -141,6 +152,8 @@ export class RegistrationComponent implements OnInit {
     this.disableForm(); // Disable the form
     // Create user object form user's inputs
     const user = {
+      firstName:this.form.get('firstName').value,
+      lastName:this.form.get('lastName').value,
       email: this.form.get('email').value, // E-mail input field
       username: this.form.get('username').value, // Username input field
       password: this.form.get('password').value // Password input field

@@ -9,18 +9,31 @@
 
 <!-- Registration Form -->
 <form [formGroup]="form" (submit)="onRegisterSubmit()">
-  <!--  <div class="form-group">
+    <div class="form-group">
         <label for="firstName">FirstName</label>
-        <div [ngClass]="{'has-error': (form.controls.firstName.errors && form.controls.firstName.dirty) || (!firstNameValid && form.controls.firstName.dirty), 'has-success': !form.controls.firstName.errors && firstNameValid}">
+        <div [ngClass]="{'has-error': (form.controls.firstName.errors && form.controls.firstName.dirty), 'has-success': !form.controls.firstName.errors}">
           <input type="text" name="firstName" class="form-control" autocomplete="off" placeholder="*First name" formControlName="firstName" />
         
           <ul class="help-block">
             <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
             <li *ngIf="form.controls.firstName.errors?.minlength && form.controls.firstName.dirty || form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty ">Minimum characters: 2, Maximum characters: 30</li>
-            <li *ngIf="form.controls.firstName.errors?.validateFirstName && form.controls.firstName.dirty">First name must not have any special characters</li>
+            <li *ngIf="form.controls.firstName.errors?.validateName && form.controls.firstName.dirty">First name must not have any special characters and firt letter must be capital</li>
           </ul>
         </div>
-      </div>-->
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">FirstName</label>
+        <div [ngClass]="{'has-error': (form.controls.lastName.errors && form.controls.lastName.dirty), 'has-success': !form.controls.lastName.errors}">
+          <input type="text" name="lastName" class="form-control" autocomplete="off" placeholder="*Last name" formControlName="lastName" />
+          
+          <ul class="help-block">
+            <li *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.dirty">This field is required</li>
+            <li *ngIf="form.controls.lastName.errors?.minlength && form.controls.lastName.dirty || form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty ">Minimum characters: 2, Maximum characters: 30</li>
+            <li *ngIf="form.controls.lastName.errors?.validateName && form.controls.lastName.dirty">Last name must not have any special characters and firt letter must be capital</li>
+          </ul>
+        </div>
+    </div>
 
   <!-- Username Input -->
   <div class="form-group">

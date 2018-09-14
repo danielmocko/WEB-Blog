@@ -8,6 +8,8 @@ import { AuthorizationService } from '../../services/authorization.service';
 })
 export class ProfileComponent implements OnInit {
 
+  firstName;
+  lastName;
   username;
   email;
 
@@ -15,10 +17,10 @@ export class ProfileComponent implements OnInit {
     private authService:AuthorizationService
   ) { }
 
-
-
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
+      this.firstName=profile.user.firstName;
+      this.lastName=profile.user.lastName;
       this.username = profile.user.username;
       this.email = profile.user.email; 
     });
