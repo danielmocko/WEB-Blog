@@ -19,6 +19,9 @@ import { BlogService } from './services/blog.service';
 import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
 import { DeleteBlogComponent } from './components/delete-blog/delete-blog.component';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+
 
 
 
@@ -35,13 +38,14 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
     EditBlogComponent,
     DeleteBlogComponent,
     PublicProfileComponent,
-    PublicProfileComponent
-    
+    PublicProfileComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
     FormsModule,
     FlashMessagesModule.forRoot(),
     HttpModule,

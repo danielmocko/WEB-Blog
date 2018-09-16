@@ -137,7 +137,8 @@ const userSchema = new Schema({
     lastName:{type:String,require:true,validate:lastNameValidators},
     email:{type:String,require:true,unique:true,lowercase:true,validate:emailValidators},
     username:{type:String,require:true,unique:true,lowercase:true,validate:usernameValidators},
-    password:{type:String,require:true,validate:passwordValidators}  
+    password:{type:String,require:true,validate:passwordValidators},
+    imageProfile:{type:String}
 });
 
 userSchema.pre('save', function(next) {
@@ -155,7 +156,6 @@ userSchema.pre('save', function(next) {
       next(); // Exit middleware
     });
   });
-  
 
 userSchema.methods.comparePassword = function(password){
     console.log(password);

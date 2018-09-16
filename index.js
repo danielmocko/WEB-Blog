@@ -8,6 +8,7 @@ const authentication = require('./routes/authentication')(router);
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const blogs = require('./routes/blogs')(router);
+//var fileRoutes = require('./routes/file');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.uri, (err)=>{
@@ -20,8 +21,10 @@ mongoose.connect(config.uri, (err)=>{
 
 
 app.use(cors({
-    origin: 'http://localhost:4200'
+    origin: 'http://localhost:4200',
+    credentials: true,
 }));
+
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -30,6 +33,8 @@ app.use(bodyParser.json());
 //app.use(express.static(__dirname + '/client/dist/'));
 app.use('/authentication',authentication);
 app.use('/blogs',blogs);
+//app.use('/file',fileRoutes);
+
 /*
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname + '/client/dist/index.html'));

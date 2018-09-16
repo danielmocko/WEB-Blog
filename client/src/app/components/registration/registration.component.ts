@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators} from '@angular/forms';
 import {  AuthorizationService} from '../../services/authorization.service';
 import { Router} from '@angular/router';
-import { retry } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-registration',
@@ -18,6 +18,9 @@ export class RegistrationComponent implements OnInit {
   emailMessage;
   usernameValid;
   usernameMessage;
+  imageProfile='upload/download.jpg';
+
+  
   
 
   constructor(
@@ -156,7 +159,8 @@ export class RegistrationComponent implements OnInit {
       lastName:this.form.get('lastName').value,
       email: this.form.get('email').value, // E-mail input field
       username: this.form.get('username').value, // Username input field
-      password: this.form.get('password').value // Password input field
+      password: this.form.get('password').value, // Password input field
+      imageProfile:this.imageProfile
     }
     // Function from authentication service to register user
     this.authService.regiseterUser(user).subscribe(data => {

@@ -22,6 +22,7 @@ export class AuthorizationService {
   ) { }
 
     regiseterUser(user){
+      console.log(JSON.stringify(user));
       return this.http.post(this.domain + 'authentication/register', user).pipe(map(res => res.json()));
     }
 
@@ -82,6 +83,27 @@ export class AuthorizationService {
 
     }
 */
+/*
+  onUpload(selectedFile){
+    //console.log(selectedFile);
+    this.createAuthenticationHeaders();
+    const uploadData = new FormData();
+    uploadData.append('myFile', selectedFile);
+    return this.http.post(this.domain+'authentication/profileImage',uploadData,this.options).
+    subscribe(res=>console.log(res.json()));
+  }
+
+  */
+
+
+ postFile (fileToUpload: File) {
+  this.createAuthenticationHeaders();
+  const formData: FormData = new FormData();
+  formData.append('Image', fileToUpload, fileToUpload.name);
+  return this.http.post(this.domain+'authentication/profileImage',formData,this.options);
+  }
+
+
   loggin() {
     return tokenNotExpired();
   }

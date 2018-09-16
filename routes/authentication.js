@@ -1,6 +1,34 @@
 const User=require('../models/user');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
+const multer = require('multer');
+/*
+var storage = multer.diskStorage({ //multers disk storage settings
+    destination: function (req, file, cb) {
+        cb(null, 'upload/');
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+    }
+});
+
+var upload = multer({ //multer settings
+    storage: storage
+}).single('file');
+*/
+
+
+var store = multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null, './uploads');
+    },
+    filename:function(req,file,cb){
+        cb(null, Date.now()+'.'+file.originalname);
+    }
+});
+
+var upload = multer({storage:store}).single('file');
 
 module.exports=(router)=>{
 
@@ -25,8 +53,10 @@ module.exports=(router)=>{
                                 lastName:req.body.lastName,
                                 email: req.body.email.toLowerCase(),
                                 username: req.body.username.toLowerCase(),
-                                password: req.body.password
+                                password: req.body.password,
+                                imageProfile:req.body.imageProfile
                             });
+                            console.log(JSON.stringify(user));
                             user.save((err)=>{
                             if(err){
                                 console.log(err);
@@ -183,6 +213,70 @@ module.exports=(router)=>{
           });
         }
       });
+ /*   
+    router.put('/profileImage:imagePath',(req,res) =>{
+        if(!req.body){
+            res.json({success:false,message:'We have a problem boss'});
+        }
+        else{
+            User.findOne({_id:req.decoded.userId},(err,user)=>{
+                if(err)
+                    res.json({success:false,message:'Something went wrong.'});
+                else{
+                    if(!user){
+                        res.json({ success: false, message: 'Could not authenticate user.' });
+                    }else{
+                        user.imageProfile=req.body.imageProfile;
+                        user.save((err)=>{
+                            if(err)
+                                res.json({success:false,message:'Something went wrong.'});
+                            else
+                                res.json({success:true,message:'Image updated'});
+                        })
+                    }
+                }
+            })
+        }
+    });
 
+*/
+/*
+router.post('/profileImage',function (req, res) {
+    upload(req, res, function (err) {
+        if (err) {
+            return res.end(err.toString());
+        }
+            res.end('File is uploaded');
+        });
+    });
+
+    */
+/*
+   router.post("/profileImage", multer({dest: "./uploads/"}).array("uploads", 12), function(req, res) {
+        res.send(req.files);
+    });
+
+    */
+   router.post('/profileImage', function(req,res,next){
+    upload(req,res,function(err){
+        if(err){
+            return res.status(501).json({error:err});
+        }
+        //do all database record saving activity
+        return res.json({originalname:req.file.originalname, uploadname:req.file.filename});
+    });
+})
+    /*
+      router.post('/profileImage',function(req, res,err) {
+          upload(function(req,res,err){
+            if(err){
+                 res.json({error_code:1,message:err.errors});
+                //res.json({success:false,message:'Dogodila se greska'});
+                return;
+            }
+            res.json({error_code:0,err_desc:null});
+        });
+    });
+    */
     return router;
 }
