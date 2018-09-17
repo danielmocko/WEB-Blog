@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
   username;
   email;
   gender;
+
   imageToShow: any;
   isImageLoading=false;
   imageUrl;
@@ -33,10 +34,10 @@ export class ProfileComponent implements OnInit {
       this.attachmentList.push(JSON.parse(response));
       console.log(response);
       }
+    this.getProfilData();
   }
-  
-ngOnInit() {
- 
+
+  getProfilData(){
     this.authService.getProfile().subscribe(profile => {
       this.firstName=profile.user.firstName;
       this.lastName=profile.user.lastName;
@@ -44,7 +45,11 @@ ngOnInit() {
       this.email = profile.user.email; 
       this.imageUrl=profile.user.imageProfile;
     });
-    console.log(JSON.stringify(this.imageUrl));
-   
+  } 
+  
+  
+  ngOnInit() {
+    this.authService.getProfile();
+   // this.authService.getImage(this.imageUrl).subscribe(res=>console.log(res.JSON()));
   }
 }

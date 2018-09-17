@@ -200,16 +200,42 @@ module.exports=(router)=>{
           });
         }
       });
- 
-   router.post('/profileImage', function(req,res,next){
-    upload(req,res,function(err){
-        if(err){
-            return res.status(501).json({error:err});
-        }
-        //do all database record saving activity
-        return res.json({originalname:req.file.originalname, uploadname:req.file.filename});
+
+    router.post('/profileImage', function(req,res,next){
+        upload(req,res,function(err){
+            if(err)
+                return res.status(501).json({error:err});
+            else{
+                const token = req.headers['authorization'];
+                var decoded = jwt.decode(token);
+                console.log( decoded );
+                /*User.findOne({_id:decoded.userId},(err, user) => {
+                    if (err) 
+                        res.json({ success: false, message: 'Something went wrong.' }); // Return error message
+                    else {
+                        if (!user) 
+                            res.json({ success: false, message: 'Could not authenticate user.' }); // Return error message
+                        else {
+                            const path = store.destination +'/'+req.file.filename;
+                            User.update({ _imageProfile:req.file.filename}, {imageProfile:path});
+                            return res.json({originalname:req.file.originalname, uploadname:req.file.filename});
+                        }
+                    }
+                    req.headers['authorization'];
+                    return res.json({originalname:req.file.originalname, uploadname:req.file.filename});
+                });*/
+
+                const path = 'assets/img/'+req.file.filename;
+                console.log(path);
+                User.update({ _id:decoded.userId}, {$set:{imageProfile:path}}).exec();
+                return res.json({originalname:req.file.originalname, uploadname:req.file.filename});
+            }
+           
         });
+        
     });
+
+
 /*
     router.post('/download', function(req,res,next){
         filepath = path.join(__dirname,'../uploads') +'/'+req.body.filename;

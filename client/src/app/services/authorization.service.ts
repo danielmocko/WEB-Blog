@@ -81,39 +81,13 @@ export class AuthorizationService {
       return this.http.get(this.domain + 'authentication/publicProfile/' + username, this.options).pipe(map(res => res.json()));
     }
 
- postFile (fileToUpload: File) {
-  this.createAuthenticationHeaders();
-  const formData: FormData = new FormData();
-  formData.append('Image', fileToUpload, fileToUpload.name);
-  return this.http.post(this.domain+'authentication/profileImage',formData,this.options);
-  }
+    postFile (fileToUpload: File) {
+      this.createAuthenticationHeaders();
+      const formData: FormData = new FormData();
+      formData.append('Image', fileToUpload, fileToUpload.name);
+      return this.http.post(this.domain+'authentication/profileImage',formData,this.options);
+    }
 
-  downloadFile(file:String){
-    var body = {filename:file};
-
-    return this.httpClient.post(this.domain+'authentication/download',body,{
-        responseType : 'blob',
-        headers:new HttpHeaders().append('Content-Type','application/json')
-        .append('authorization',this.authToken)
-    });
-}
-/*
-  getImage(imageUrl: string): Observable<File> {
-    return this.httpClient
-        .get(this.domain +'authentication/getImage/'+imageUrl, { responseType : 'blob',
-        headers:new HttpHeaders().append('Content-Type','application/json').append('authorization',this.authToken)
-    })
-        .pipe(map((res: Response) => res.blob()));
-}
-*/
-  /*
-  getImage(imageUrl: string): Observable<File> {
-    return this.httpClient
-        .get(imageUrl, {  responseType: ResponseContentType.Blob, headers:new HttpHeaders().append('Content-Type','application/json')
-        .append( 'authorization',this.authToken)})
-        .pipe(map((res: Response) => res.blob()));
-}
-*/
 
   loggin() {
     return tokenNotExpired();
