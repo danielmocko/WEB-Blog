@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http,Headers,RequestOptions} from '@angular/http';
+import { Http,Headers,RequestOptions, ResponseContentType} from '@angular/http';
 import { map } from "rxjs/operators";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tokenNotExpired } from 'angular2-jwt';
+import 'rxjs/Rx';
+import {Observable} from 'rxjs';
+import { HttpClient ,HttpHeaders} from '@angular/common/http';
 
 
 @Injectable({
@@ -18,7 +21,8 @@ export class AuthorizationService {
 
 
   constructor(
-    private http:Http
+    private http:Http,
+    private httpClient:HttpClient
   ) { }
 
     regiseterUser(user){
@@ -77,25 +81,6 @@ export class AuthorizationService {
       return this.http.get(this.domain + 'authentication/publicProfile/' + username, this.options).pipe(map(res => res.json()));
     }
 
-/*
-    loggin(){
-      return this.helper.isTokenExpired(localStorage.getItem('token'));
-
-    }
-*/
-/*
-  onUpload(selectedFile){
-    //console.log(selectedFile);
-    this.createAuthenticationHeaders();
-    const uploadData = new FormData();
-    uploadData.append('myFile', selectedFile);
-    return this.http.post(this.domain+'authentication/profileImage',uploadData,this.options).
-    subscribe(res=>console.log(res.json()));
-  }
-
-  */
-
-
  postFile (fileToUpload: File) {
   this.createAuthenticationHeaders();
   const formData: FormData = new FormData();
@@ -103,6 +88,32 @@ export class AuthorizationService {
   return this.http.post(this.domain+'authentication/profileImage',formData,this.options);
   }
 
+  downloadFile(file:String){
+    var body = {filename:file};
+
+    return this.httpClient.post(this.domain+'authentication/download',body,{
+        responseType : 'blob',
+        headers:new HttpHeaders().append('Content-Type','application/json')
+        .append('authorization',this.authToken)
+    });
+}
+/*
+  getImage(imageUrl: string): Observable<File> {
+    return this.httpClient
+        .get(this.domain +'authentication/getImage/'+imageUrl, { responseType : 'blob',
+        headers:new HttpHeaders().append('Content-Type','application/json').append('authorization',this.authToken)
+    })
+        .pipe(map((res: Response) => res.blob()));
+}
+*/
+  /*
+  getImage(imageUrl: string): Observable<File> {
+    return this.httpClient
+        .get(imageUrl, {  responseType: ResponseContentType.Blob, headers:new HttpHeaders().append('Content-Type','application/json')
+        .append( 'authorization',this.authToken)})
+        .pipe(map((res: Response) => res.blob()));
+}
+*/
 
   loggin() {
     return tokenNotExpired();

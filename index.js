@@ -8,6 +8,7 @@ const authentication = require('./routes/authentication')(router);
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const blogs = require('./routes/blogs')(router);
+var cookieParser = require('cookie-parser');
 //var fileRoutes = require('./routes/file');
 
 mongoose.Promise = global.Promise;
@@ -28,6 +29,8 @@ app.use(cors({
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 //for building appplication and nested angular in node, just start app with node start or nodemon index.js
 //app.use(express.static(__dirname + '/client/dist/'));

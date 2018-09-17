@@ -138,6 +138,7 @@ const userSchema = new Schema({
     email:{type:String,require:true,unique:true,lowercase:true,validate:emailValidators},
     username:{type:String,require:true,unique:true,lowercase:true,validate:usernameValidators},
     password:{type:String,require:true,validate:passwordValidators},
+    gender:{type:String,required:true},
     imageProfile:{type:String}
 });
 

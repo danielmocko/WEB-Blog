@@ -18,7 +18,7 @@ export class RegistrationComponent implements OnInit {
   emailMessage;
   usernameValid;
   usernameMessage;
-  imageProfile='upload/download.jpg';
+  imageProfile;
 
   
   
@@ -67,6 +67,7 @@ export class RegistrationComponent implements OnInit {
         Validators.maxLength(35), // Maximum length is 35 characters
         this.validatePassword // Custom validation
       ])],
+      gender:['',Validators.required],
       // Confirm Password Input
       confirm: ['', Validators.required] // Field is required
     }, { validator: this.matchingPasswords('password', 'confirm') }); // Add custom validator to form for matching passwords
@@ -80,6 +81,7 @@ export class RegistrationComponent implements OnInit {
     this.form.controls['username'].disable();
     this.form.controls['password'].disable();
     this.form.controls['confirm'].disable();
+    this.form.controls['gender'].disable();
   }
 
   // Function to enable the registration form
@@ -90,6 +92,7 @@ export class RegistrationComponent implements OnInit {
     this.form.controls['username'].enable();
     this.form.controls['password'].enable();
     this.form.controls['confirm'].enable();
+    this.form.controls['gender'].enable();
   }
 
 
@@ -153,16 +156,19 @@ export class RegistrationComponent implements OnInit {
   onRegisterSubmit() {
     this.processing = true; // Used to notify HTML that form is in processing, so that it can be disabled
     this.disableForm(); // Disable the form
+    this.gender();
     // Create user object form user's inputs
     const user = {
       firstName:this.form.get('firstName').value,
       lastName:this.form.get('lastName').value,
       email: this.form.get('email').value, // E-mail input field
       username: this.form.get('username').value, // Username input field
-      password: this.form.get('password').value, // Password input field
+      password: this.form.get('password').value,
+      gender:this.form.get('gender').value, // Password input field
       imageProfile:this.imageProfile
     }
     // Function from authentication service to register user
+   
     this.authService.regiseterUser(user).subscribe(data => {
       // Resposne from registration attempt
       if (!data.success) {
@@ -210,6 +216,15 @@ export class RegistrationComponent implements OnInit {
         this.usernameMessage = data.message; // Return success message
       }
     });
+  }
+
+  gender(){
+    if(this.form.controls['gender'].value=="male"){
+      this.imageProfile='assets/img/male.jpg';
+    }
+    else if (this.form.controls['gender'].value=="female"){
+      this.imageProfile='assets/img/female.jpg'
+    }
   }
 
 

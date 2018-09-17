@@ -92,8 +92,19 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <label for="gender">Gender</label>
+    <div [ngClass]="{'has-error': (form.controls.gender.errors && form.controls.gender.dirty), 'has-success': !form.controls.gender.errors}">
+      <input type="radio" value="male" name="gender" formControlName="gender" required> Male
+      <input type="radio" value="female" name="gender" formControlName="gender"l required> Female
+      <ul class="help-block">
+        <li *ngIf="form.controls.gender.errors?.required && form.controls.gender.dirty">This field is required</li>
+      </ul>
+    </div>
+  </div>
+
   <!-- Submit Input -->
-  <input [disabled]="!form.valid || processing || !emailValid || !usernameValid" type="submit" class="btn btn-primary" value="Submit" />
+  <input [disabled]="!form.valid || processing || !emailValid || !usernameValid " type="submit" class="btn btn-primary" value="Submit" />
 
 <!-- Registration Form /-->
   <p>Username:{{ form.controls.username.value}}</p>

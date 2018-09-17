@@ -2,26 +2,10 @@ const User=require('../models/user');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const multer = require('multer');
-/*
-var storage = multer.diskStorage({ //multers disk storage settings
-    destination: function (req, file, cb) {
-        cb(null, 'upload/');
-    },
-    filename: function (req, file, cb) {
-        var datetimestamp = Date.now();
-        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
-    }
-});
-
-var upload = multer({ //multer settings
-    storage: storage
-}).single('file');
-*/
-
 
 var store = multer.diskStorage({
     destination:function(req,file,cb){
-        cb(null, './uploads');
+        cb(null, './client/src/assets/img');
     },
     filename:function(req,file,cb){
         cb(null, Date.now()+'.'+file.originalname);
@@ -48,44 +32,47 @@ module.exports=(router)=>{
                         if(!req.body.lastName)
                             res.json({success:false,message:"You must provide an last name"})
                         else{
-                            let user= new User({
-                                firstName:req.body.firstName,
-                                lastName:req.body.lastName,
-                                email: req.body.email.toLowerCase(),
-                                username: req.body.username.toLowerCase(),
-                                password: req.body.password,
-                                imageProfile:req.body.imageProfile
-                            });
-                            console.log(JSON.stringify(user));
-                            user.save((err)=>{
-                            if(err){
-                                console.log(err);
-                                if(err.code ===11000){
-                                    res.json({success:false,message:"Username or e-mail already exists"});
-                                }else{
-                                    if(err.errors){
-                                        if(err.errors.email){
-                                            res.json({success:false,message:err.errors.email.message});
+                            if(!req.body.gender)
+                                res.json({success:false,message:"You must provide an gender"})
+                            else{
+                                let user= new User({
+                                    firstName:req.body.firstName,
+                                    lastName:req.body.lastName,
+                                    email: req.body.email.toLowerCase(),
+                                    username: req.body.username.toLowerCase(),
+                                    password: req.body.password,
+                                    gender:req.body.gender,
+                                    imageProfile:req.body.imageProfile
+                                });
+                                console.log(JSON.stringify(user));
+                                user.save((err)=>{
+                                if(err){
+                                    console.log(err);
+                                    if(err.code ===11000){
+                                        res.json({success:false,message:"Username or e-mail already exists"});
+                                    }else{
+                                        if(err.errors){
+                                            if(err.errors.email){
+                                                res.json({success:false,message:err.errors.email.message});
+                                            }
+                                            else if(err.errors.username){
+                                                res.json({success:false,message:err.errors.username.message});
+                                            }
+                                            else if(err.errors.password){
+                                                res.json({success:false,message:err.errors.password.message});
+                                            }
                                         }
-                                        else if(err.errors.username){
-                                            res.json({success:false,message:err.errors.username.message});
+                                        else{  
+                                            res.json({success:false,message:"Could not save user. Error: ",err});
                                         }
-                                        else if(err.errors.password){
-                                            res.json({success:false,message:err.errors.password.message});
-                                        }
+                                        
                                     }
-                                    else{  
-                                        res.json({success:false,message:"Could not save user. Error: ",err});
-                                        }
-                                    
-                                }
-                            }else{
-                                res.json({success:true,message:"User success saved"});
-                            }
-                        });
+                                }else
+                                    res.json({success:true,message:"User success saved"});
+                            });
+                        }
                     }
                 }
-        
             }
         }
     }
@@ -175,7 +162,7 @@ module.exports=(router)=>{
     });
 
     router.get('/profile',(req,res)=>{
-        User.findOne({ _id: req.decoded.userId }).select('firstName lastName username email').exec((err,user)=>{
+        User.findOne({ _id: req.decoded.userId }).select('firstName lastName username email imageProfile').exec((err,user)=>{
             if(err){
                 res.json({success:false,message:err});
             }
@@ -213,50 +200,7 @@ module.exports=(router)=>{
           });
         }
       });
- /*   
-    router.put('/profileImage:imagePath',(req,res) =>{
-        if(!req.body){
-            res.json({success:false,message:'We have a problem boss'});
-        }
-        else{
-            User.findOne({_id:req.decoded.userId},(err,user)=>{
-                if(err)
-                    res.json({success:false,message:'Something went wrong.'});
-                else{
-                    if(!user){
-                        res.json({ success: false, message: 'Could not authenticate user.' });
-                    }else{
-                        user.imageProfile=req.body.imageProfile;
-                        user.save((err)=>{
-                            if(err)
-                                res.json({success:false,message:'Something went wrong.'});
-                            else
-                                res.json({success:true,message:'Image updated'});
-                        })
-                    }
-                }
-            })
-        }
-    });
-
-*/
-/*
-router.post('/profileImage',function (req, res) {
-    upload(req, res, function (err) {
-        if (err) {
-            return res.end(err.toString());
-        }
-            res.end('File is uploaded');
-        });
-    });
-
-    */
-/*
-   router.post("/profileImage", multer({dest: "./uploads/"}).array("uploads", 12), function(req, res) {
-        res.send(req.files);
-    });
-
-    */
+ 
    router.post('/profileImage', function(req,res,next){
     upload(req,res,function(err){
         if(err){
@@ -264,18 +208,12 @@ router.post('/profileImage',function (req, res) {
         }
         //do all database record saving activity
         return res.json({originalname:req.file.originalname, uploadname:req.file.filename});
-    });
-})
-    /*
-      router.post('/profileImage',function(req, res,err) {
-          upload(function(req,res,err){
-            if(err){
-                 res.json({error_code:1,message:err.errors});
-                //res.json({success:false,message:'Dogodila se greska'});
-                return;
-            }
-            res.json({error_code:0,err_desc:null});
         });
+    });
+/*
+    router.post('/download', function(req,res,next){
+        filepath = path.join(__dirname,'../uploads') +'/'+req.body.filename;
+        res.sendFile(filepath);
     });
     */
     return router;
