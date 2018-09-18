@@ -14,6 +14,10 @@ export class PublicProfileComponent implements OnInit {
   foundProfile = false;
   messageClass;
   message;
+  firstName;
+  lastName;
+
+  imageUrl;
 
 
   constructor(
@@ -22,18 +26,19 @@ export class PublicProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentUrl = this.activatedRoute.snapshot.params; // Get URL parameters on page load
-    // Service to get the public profile data
+    this.currentUrl = this.activatedRoute.snapshot.params;
     this.authService.getPublicProfile(this.currentUrl.username).subscribe(data => {
-      // Check if user was found in database
       if (!data.success) {
-        this.messageClass = 'alert alert-danger'; // Return bootstrap error class
-        this.message = data.message; // Return error message
+        this.messageClass = 'alert alert-danger'; 
+        this.message = data.message; 
         this.foundProfile = false;
       } else {
         this.foundProfile=true;
-        this.username = data.user.username; // Save the username for use in HTML
-        this.email = data.user.email; // Save the email for use in HTML
+        this.firstName = data.user.firstName;
+        this.lastName= data.user.lastName;
+        this.username = data.user.username;
+        this.email = data.user.email;
+        this.imageUrl=data.user.imageProfile;
       }
     });
   }

@@ -1,3 +1,21 @@
-<p>
-  home works!
+<h1>Poljo Blog </h1>
+<hr>
+<h2>Namena</h2>
+<p> 
+    Ovaj WEB sajt namenjen je za diskusiju tema koju korisnici postavljaju kako bi razmenili svoja iskustva i mišljenja.
+    Ciljna grupa ovog WEB sajta su poljoprivrednici. Oni mogu da posavljaju teme vezane za sve poljoprivredne grane koje postoje
+    kao i da dele neke savete u vezi nekih nedoumica ili da se medjusobno pomognu oko resavanja nekih problema.
 </p>
+  
+<h2>Uslovi koršćenja</h2>
+<p>
+  Da bi ste mogli da diskutujete o temama koju korisnici kreiraju ili da je sami otvorite za diskusiju neophodno je da se ulogujete.
+  U koliko imate već kreiran nalog potrebno je da klinete na dugme u dnu stranice <b>PRIJAVA</b>. <br>
+  Ukoliko nemate nalog potrebno je da se registrujete klikom na dugme u dnu stranice <b>REGISTRACIJA</b>    
+</p>
+
+<h4>Zabranjeno je vršiti sve oblike verbalnog nasilja!!!</h4>
+<div class= "button-align button-float" *ngIf="!isActive">
+<a [routerLink]="['/login']" > <button type="button" name="button" class="btn btn-info " >PRIJAVA</button></a>
+<a [routerLink]="['/register']"> <button type="button" name="button" class="btn btn-warning  ">REGISTRACIJA</button></a>
+</div>

@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
 
-  // Function to check if user is authorized to view route
   canActivate(
     router: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

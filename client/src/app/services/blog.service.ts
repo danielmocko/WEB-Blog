@@ -17,19 +17,17 @@ export class BlogService {
   ) { }
 
   createAuthenticationHeaders() {
-    this.authService.loadToken(); // Get token so it can be attached to headers
-    // Headers configuration options
+    this.authService.loadToken(); 
     this.options = new RequestOptions({
       headers: new Headers({
-        'Content-Type': 'application/json', // Format set to JSON
-        'authorization': this.authService.authToken // Attach token
+        'Content-Type': 'application/json', 
+        'authorization': this.authService.authToken
       })
     });
   }
 
-  // Function to create a new blog post
   newBlog(blog) {
-    this.createAuthenticationHeaders(); // Create headers
+    this.createAuthenticationHeaders();
     return this.http.post(this.domain + 'blogs/newBlog', blog, this.options).pipe(map(res => res.json()));
   }
 
@@ -59,20 +57,10 @@ export class BlogService {
     const blogData = { id:id}
     return this.http.put(this.domain+'blogs/dislikeBlog',blogData,this.options).pipe(map(res=>res.json()));
   }
-/*
-  deleteBlogComment(blogId,blogCommentId){
-    const blogData = { id:blogId,
-            blogCommentId:blogCommentId
-      }
-   // console.log(blogData);
-    return this.http.delete(this.domain+'blogs/deleteComment/'+blogData,this.options).pipe(map(res=>res.json()));
-  }
-*/
 
 
   postComment(id, comment) {
-    this.createAuthenticationHeaders(); // Create headers
-    // Create blogData to pass to backend
+    this.createAuthenticationHeaders();
     const blogData = {
       id: id,
       comment: comment
@@ -80,6 +68,4 @@ export class BlogService {
     return this.http.post(this.domain + 'blogs/comment', blogData, this.options).pipe(map(res => res.json()));
 
   }
-
- 
 }

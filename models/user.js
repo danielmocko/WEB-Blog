@@ -143,18 +143,16 @@ const userSchema = new Schema({
 });
 
 userSchema.pre('save', function(next) {
-    // Ensure password is new or modified before applying encryption
     if (!this.isModified('password'))
       return next();
-  
-    // Apply encryption
+
     bcrypt.hash(this.password, null, null, (err, hash) => {
       if (err) 
-        return next(err); // Ensure no errors
+        return next(err);
 
       console.log(this.password);
-      this.password = hash; // Apply encryption to password
-      next(); // Exit middleware
+      this.password = hash;
+      next();
     });
   });
 

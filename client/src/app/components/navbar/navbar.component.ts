@@ -12,10 +12,6 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class NavbarComponent implements OnInit {
 
-
- // helper = new JwtHelperService();
-  //isExpired = this.helper.isTokenExpired(localStorage.getItem('token'));
-
   constructor(
     private authService:AuthorizationService,
     private router:Router,
@@ -24,12 +20,10 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   onLogoutClick() {
-    this.authService.logout(); // Logout user
-    this.flashMessagesService.show('You are logged out', { cssClass: 'alert-info' }); // Set custom flash message
-    this.router.navigate(['/']); // Navigate back to home page
+    this.authService.logout(); 
+    this.flashMessagesService.show('Uspešno ste se odjavili', { cssClass: 'alert-info' });
+    this.router.navigate(['/']);
   }
-
- 
 
   ngOnInit() {
   }

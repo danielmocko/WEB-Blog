@@ -70,33 +70,33 @@ export class BlogComponent implements OnInit {
   }
 
   onBlogSubmit() {
-    this.processing = true; // Disable submit button
-    this.disableFormNewBlogForm(); // Lock form
-    // Create blog object from form fields
+    this.processing = true; 
+    this.disableFormNewBlogForm(); 
+  
     const blog = {
-      title: this.form.get('title').value, // Title field
-      body: this.form.get('body').value, // Body field
-      createdBy: this.username // CreatedBy field
+      title: this.form.get('title').value, 
+      body: this.form.get('body').value, 
+      createdBy: this.username
     }
 
-    // Function to save blog into database
+   
     this.blogService.newBlog(blog).subscribe(data => {
 
       if (!data.success) {
         this.messageClass = 'alert alert-danger'; 
         this.message = data.message;
-        this.processing = false; // Enable submit button
-        this.enableFormNewBlogForm(); // Enable form
+        this.processing = false; 
+        this.enableFormNewBlogForm();
       } else {
-        this.messageClass = 'alert alert-success'; // Return success class
+        this.messageClass = 'alert alert-success'; 
         this.message = data.message;
         this.getAllBlogs();
         setTimeout(() => {
-          this.newPost = false; // Hide form
-          this.processing = false; // Enable submit button
-          this.message = false; // Erase error/success message
-          this.form.reset(); // Reset all form fields
-          this.enableFormNewBlogForm(); // Enable the form fields
+          this.newPost = false; 
+          this.processing = false;
+          this.message = false; 
+          this.form.reset(); 
+          this.enableFormNewBlogForm();
         }, 2000);
       }
     });
@@ -127,17 +127,16 @@ export class BlogComponent implements OnInit {
   
 
   likeBlog(id) {
-    // Service to like a blog post
+    
     this.blogService.likeBlog(id).subscribe(data => {
-      this.getAllBlogs(); // Refresh blogs after like
+      this.getAllBlogs();
     });
   }
 
-// Function to disliked a blog post
+
   dislikeBlog(id) {
-    // Service to dislike a blog post
     this.blogService.dislikeBlog(id).subscribe(data => {
-      this.getAllBlogs(); // Refresh blogs after dislike
+      this.getAllBlogs();
     });
   }
 
@@ -152,55 +151,51 @@ export class BlogComponent implements OnInit {
     })
   }
 
-  // Enable the comment form
   enableCommentForm() {
-    this.commentForm.get('comment').enable(); // Enable comment field
+    this.commentForm.get('comment').enable();
   }
 
-  // Disable the comment form
   disableCommentForm() {
-    this.commentForm.get('comment').disable(); // Disable comment field
+    this.commentForm.get('comment').disable();
   }
 
   draftComment(id) {
-    this.commentForm.reset(); // Reset the comment form each time users starts a new comment
-    this.newComment = []; // Clear array so only one post can be commented on at a time
-    this.newComment.push(id); // Add the post that is being commented on to the array
+    this.commentForm.reset();
+    this.newComment = [];
+    this.newComment.push(id);
   }
 
   postComment(id) {
-    this.disableCommentForm(); // Disable form while saving comment to database
-    this.processing = true; // Lock buttons while saving comment to database
-    const comment = this.commentForm.get('comment').value; // Get the comment value to pass to service function
-    // Function to save the comment to the database
+    this.disableCommentForm();
+    this.processing = true;
+    const comment = this.commentForm.get('comment').value;
     this.blogService.postComment(id, comment).subscribe(data => {
-      this.getAllBlogs(); // Refresh all blogs to reflect the new comment
-      const index = this.newComment.indexOf(id); // Get the index of the blog id to remove from array
-      this.newComment.splice(index, 1); // Remove id from the array
-      this.enableCommentForm(); // Re-enable the form
-      this.commentForm.reset(); // Reset the comment form
-      this.processing = false; // Unlock buttons on comment form
-      if (this.enabledComments.indexOf(id) < 0) this.expand(id); // Expand comments for user on comment submission
+      this.getAllBlogs();
+      const index = this.newComment.indexOf(id);
+      this.newComment.splice(index, 1);
+      this.enableCommentForm();
+      this.commentForm.reset();
+      this.processing = false;
+      if (this.enabledComments.indexOf(id) < 0) this.expand(id);
     });
   }
 
-  // Expand the list of comments
   expand(id) {
-    this.enabledComments.push(id); // Add the current blog post id to array
+    this.enabledComments.push(id);
   }
 
-  // Collapse the list of comments
+ 
   collapse(id) {
-    const index = this.enabledComments.indexOf(id); // Get position of id in array
-    this.enabledComments.splice(index, 1); // Remove id from array
+    const index = this.enabledComments.indexOf(id);
+    this.enabledComments.splice(index, 1);
   }
 
   cancelSubmission(id) {
-    const index = this.newComment.indexOf(id); // Check the index of the blog post in the array
-    this.newComment.splice(index, 1); // Remove the id from the array to cancel post submission
-    this.commentForm.reset(); // Reset  the form after cancellation
-    this.enableCommentForm(); // Enable the form after cancellation
-    this.processing = false; // Enable any buttons that were locked
+    const index = this.newComment.indexOf(id);
+    this.newComment.splice(index, 1);
+    this.commentForm.reset();
+    this.enableCommentForm();
+    this.processing = false; 
   }
 
   isAdmin(){
@@ -211,7 +206,7 @@ export class BlogComponent implements OnInit {
     const jwt = new JwtHelperService();
     const decodeToken = jwt.decodeToken(token);
     console.log(decodeToken);
-    if(decodeToken.userId=='5b9ff24293d3870b783098a3'){
+    if(decodeToken.userId=='5ba0e7847bc8c90a0c82745a'){
       return true;
     }
     else
@@ -223,7 +218,7 @@ export class BlogComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
-      this.username = profile.user.username; // Used when creating new blog posts and comments
+      this.username = profile.user.username;
     });
 
     this.getAllBlogs();

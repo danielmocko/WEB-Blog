@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Component, Directive, Pipe } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { AppRoutingModule} from './app-routing.module'; 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { HomeComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule,FormsModule} from '@angular/forms';
 import { HttpModule} from '@angular/http';
@@ -21,8 +19,7 @@ import { DeleteBlogComponent } from './components/delete-blog/delete-blog.compon
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
-import { CommonModule } from '@angular/common';
-
+import { HomeComponent } from './components/home/home.component';
 
 
 
@@ -31,8 +28,6 @@ import { CommonModule } from '@angular/common';
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent,
-    DashboardComponent,
     RegistrationComponent,
     LoginComponent,
     ProfileComponent,
@@ -41,7 +36,8 @@ import { CommonModule } from '@angular/common';
     DeleteBlogComponent,
     PublicProfileComponent,
     PublicProfileComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

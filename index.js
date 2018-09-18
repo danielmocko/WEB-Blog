@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const blogs = require('./routes/blogs')(router);
 var cookieParser = require('cookie-parser');
-//var fileRoutes = require('./routes/file');
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.uri, (err)=>{
@@ -20,28 +20,25 @@ mongoose.connect(config.uri, (err)=>{
     }
 });
 
-
 app.use(cors({
     origin: 'http://localhost:4200',
     credentials: true,
 }));
-
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//for building appplication and nested angular in node, just start app with node start or nodemon index.js
-//app.use(express.static(__dirname + '/client/dist/'));
+
+app.use(express.static(__dirname + '/client/dist/'));
 app.use('/authentication',authentication);
 app.use('/blogs',blogs);
-//app.use('/file',fileRoutes);
 
-/*
+
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname + '/client/dist/index.html'));
-});*/
+});
 
 app.listen(8080, () =>{
     console.log('Listening on port 8080');

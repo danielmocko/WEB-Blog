@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http,Headers,RequestOptions, ResponseContentType} from '@angular/http';
+import { Http,Headers,RequestOptions} from '@angular/http';
 import { map } from "rxjs/operators";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tokenNotExpired } from 'angular2-jwt';
 import 'rxjs/Rx';
-import {Observable} from 'rxjs';
-import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
 
 @Injectable({
@@ -65,7 +64,7 @@ export class AuthorizationService {
     }
 
     getProfile() {
-      this.createAuthenticationHeaders(); // Create headers before sending to API
+      this.createAuthenticationHeaders();
       return this.http.get(this.domain + 'authentication/profile', this.options).pipe(map(res => res.json()));
     }
 
@@ -76,7 +75,7 @@ export class AuthorizationService {
     }
     
     getPublicProfile(username) {
-      this.createAuthenticationHeaders(); // Create headers before sending to API
+      this.createAuthenticationHeaders();
       console.log(username);
       return this.http.get(this.domain + 'authentication/publicProfile/' + username, this.options).pipe(map(res => res.json()));
     }
