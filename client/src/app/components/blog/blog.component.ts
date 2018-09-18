@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,FormBuilder,Validator, Validators} from '@angular/forms';
 import { AuthorizationService} from '../../services/authorization.service';
 import { BlogService} from '../../services/blog.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-blog',
@@ -21,6 +22,8 @@ export class BlogComponent implements OnInit {
   newComment = [];
   enabledComments = [];
   commentForm;
+
+  admin=false;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -120,6 +123,9 @@ export class BlogComponent implements OnInit {
       this.blogPosts=data.blogs;
     })
   }
+
+  
+
   likeBlog(id) {
     // Service to like a blog post
     this.blogService.likeBlog(id).subscribe(data => {
@@ -197,6 +203,23 @@ export class BlogComponent implements OnInit {
     this.processing = false; // Enable any buttons that were locked
   }
 
+  isAdmin(){
+    const token = localStorage.getItem('token');
+    if(!token)
+      return false;
+
+    const jwt = new JwtHelperService();
+    const decodeToken = jwt.decodeToken(token);
+    console.log(decodeToken);
+    if(decodeToken.userId=='5b9ff24293d3870b783098a3'){
+      return true;
+    }
+    else
+      return false;
+          
+      
+  }
+
 
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
@@ -204,6 +227,8 @@ export class BlogComponent implements OnInit {
     });
 
     this.getAllBlogs();
+    this.admin=this.isAdmin();
+    console.log(this.admin);
   }
 
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Component, Directive, Pipe } from '@angular/core';
 import { AppRoutingModule} from './app-routing.module'; 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -21,6 +21,8 @@ import { DeleteBlogComponent } from './components/delete-blog/delete-blog.compon
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { CommonModule } from '@angular/common';
+
 
 
 

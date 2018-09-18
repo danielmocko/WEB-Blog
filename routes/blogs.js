@@ -1,5 +1,6 @@
 const User=require('../models/user');
 const Blog = require('../models/blog');
+const Comment = require('../models/blog');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
@@ -102,6 +103,7 @@ module.exports = (router)=>{
                             if(err)
                                 res.json({success:false,message:'Unable to authenticate userr.'});
                             else{
+                                console.log(JSON.stringify(user));
                                 if(user.username!== blog.createdBy)
                                     res.json({success:false,message:'You are not authorized to edit this blog.'});
                                 else{
@@ -157,16 +159,16 @@ module.exports = (router)=>{
                                 if(!user){
                                     res.json({success:false,message:'Unable to authenticate user.'});
                                 }else{
-                                    if(user.username!== blog.createdBy){
+                                   /* if((user.username==="admin") || (user.username!== blog.createdBy)){
                                         res.json({success:false,message:'You are not authorized to delete this blog post'});
-                                    }else{
+                                    }else{*/
                                         blog.remove((err)=>{
                                             if(err)
                                                 res.json({success:false,message:err});
                                             else
                                                 res.json({success:true,message:'Blog deleted successful!'});
                                         });
-                                    }
+                                    //}
                                 }
                             }
                         });

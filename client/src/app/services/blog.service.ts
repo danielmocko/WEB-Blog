@@ -59,6 +59,16 @@ export class BlogService {
     const blogData = { id:id}
     return this.http.put(this.domain+'blogs/dislikeBlog',blogData,this.options).pipe(map(res=>res.json()));
   }
+/*
+  deleteBlogComment(blogId,blogCommentId){
+    const blogData = { id:blogId,
+            blogCommentId:blogCommentId
+      }
+   // console.log(blogData);
+    return this.http.delete(this.domain+'blogs/deleteComment/'+blogData,this.options).pipe(map(res=>res.json()));
+  }
+*/
+
 
   postComment(id, comment) {
     this.createAuthenticationHeaders(); // Create headers
