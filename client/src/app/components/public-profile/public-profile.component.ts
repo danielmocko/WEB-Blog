@@ -21,7 +21,7 @@ export class PublicProfileComponent implements OnInit {
 
 
   constructor(
-    private authService:AuthorizationService,
+    public authService:AuthorizationService,
     private activatedRoute: ActivatedRoute
   ) { }
 

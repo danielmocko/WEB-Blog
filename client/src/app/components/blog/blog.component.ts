@@ -27,8 +27,8 @@ export class BlogComponent implements OnInit {
 
   constructor(
     private formBuilder:FormBuilder,
-    private authService:AuthorizationService,
-    private blogService:BlogService
+    public authService:AuthorizationService,
+    public blogService:BlogService
   ) {
     this.createNewBlogForm();
     this.createCommentForm();

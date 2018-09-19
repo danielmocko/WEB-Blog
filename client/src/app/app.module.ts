@@ -18,7 +18,7 @@ import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
 import { DeleteBlogComponent } from './components/delete-blog/delete-blog.component';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { FileSelectDirective, FileUploadModule,} from 'ng2-file-upload';
 import { HomeComponent } from './components/home/home.component';
 
 
@@ -35,8 +35,6 @@ import { HomeComponent } from './components/home/home.component';
     EditBlogComponent,
     DeleteBlogComponent,
     PublicProfileComponent,
-    PublicProfileComponent,
-    FileSelectDirective,
     HomeComponent
   ],
   imports: [
@@ -47,6 +45,8 @@ import { HomeComponent } from './components/home/home.component';
     FormsModule,
     FlashMessagesModule.forRoot(),
     HttpModule,
+    FileUploadModule
+   
   
   ],
   providers: [

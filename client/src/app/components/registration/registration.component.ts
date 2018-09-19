@@ -10,7 +10,7 @@ import { Router} from '@angular/router';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  form: FormGroup;
+  form;
   message;
   messageClass;
   processing = false;
@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthorizationService,
+   public authService: AuthorizationService,
     private router: Router
   ) {
     this.createForm(); 

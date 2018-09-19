@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const blogs = require('./routes/blogs')(router);
 var cookieParser = require('cookie-parser');
+const port =  8080;
 
 
 mongoose.Promise = global.Promise;
@@ -31,15 +32,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(express.static(__dirname + '/client/dist/'));
+app.use(express.static(__dirname + '/client/dist/client'));
 app.use('/authentication',authentication);
 app.use('/blogs',blogs);
+app.use(express.static(__dirname + '/public'));
 
 
 app.get('*', function(req, res){
-  res.sendFile(path.join(__dirname + '/client/dist/index.html'));
+    res.sendFile(path.join(__dirname + '/client/dist/client/index.html'));
 });
 
-app.listen(8080, () =>{
-    console.log('Listening on port 8080');
-});
+app.listen(port, () => {
+    console.log('Listening on port ' + port);
+  });

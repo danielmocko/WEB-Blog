@@ -17,8 +17,8 @@ export class EditBlogComponent implements OnInit {
 
   constructor(
     private location:Location,
-    private activatedRoute:ActivatedRoute,
-    private blogService:BlogService,
+    public activatedRoute:ActivatedRoute,
+    public blogService:BlogService,
     private router:Router
   ) { }
 

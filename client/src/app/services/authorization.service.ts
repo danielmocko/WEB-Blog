@@ -80,7 +80,7 @@ export class AuthorizationService {
       return this.http.get(this.domain + 'authentication/publicProfile/' + username, this.options).pipe(map(res => res.json()));
     }
 
-    postFile (fileToUpload: File) {
+    postFile(fileToUpload: File) {
       this.createAuthenticationHeaders();
       const formData: FormData = new FormData();
       formData.append('Image', fileToUpload, fileToUpload.name);

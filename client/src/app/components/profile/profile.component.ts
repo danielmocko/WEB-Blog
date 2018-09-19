@@ -4,7 +4,7 @@ import { FileUploader} from 'ng2-file-upload';
 
 
 const uri ='http://localhost:8080/authentication/profileImage';
-const token =localStorage.getItem('token');
+
 
 @Component({
   selector: 'app-profile',
@@ -22,8 +22,9 @@ export class ProfileComponent implements OnInit {
   imageToShow: any;
   isImageLoading=false;
   imageUrl;
+  token=localStorage.getItem('token');
 
-  uploader:FileUploader = new FileUploader({ url:uri, authToken: token });
+  uploader:FileUploader = new FileUploader({ url:uri, authToken: this.token });
   attachmentList:any = [];
 
   constructor(
@@ -47,9 +48,7 @@ export class ProfileComponent implements OnInit {
     });
   } 
   
-  
   ngOnInit() {
     this.authService.getProfile();
-   // this.authService.getImage(this.imageUrl).subscribe(res=>console.log(res.JSON()));
   }
 }

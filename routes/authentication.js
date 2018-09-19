@@ -5,7 +5,7 @@ const multer = require('multer');
 
 var store = multer.diskStorage({
     destination:function(req,file,cb){
-        cb(null, './client/src/assets/img');
+        cb(null, './client/dist/client/assets/img');
     },
     filename:function(req,file,cb){
         cb(null, Date.now()+'.'+file.originalname);
@@ -196,7 +196,7 @@ module.exports=(router)=>{
                 const token = req.headers['authorization'];
                 var decoded = jwt.decode(token);
                 console.log( decoded );
-                const path = 'assets/img/'+req.file.filename;
+                const path = './assets/img/'+req.file.filename;
                 console.log(path);
                 
                 User.update({ _id:decoded.userId}, 
